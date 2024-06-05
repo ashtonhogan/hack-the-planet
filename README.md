@@ -1,2 +1,1 @@
-# hack-the-planet
-A collection of resources designed to aid both new hackers in getting started and to serve as a reference for seasoned hackers
+![Hack The Planet](https://github.com/ashtonhogan/hack-the-planet/blob/main/giphy.gif?raw=true)
