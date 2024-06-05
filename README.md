@@ -2,10 +2,7 @@
 
 ## Index
 
-### Education
 - [Education](Education/README.md)
-
-### Tools
 - [Tools](Tools/README.md)
 	- [Gobuster Usage](Tools/Usage/gobuster.md)
 	- [Metasploit Framework Usage](Tools/Usage/metasploitframework.md)
