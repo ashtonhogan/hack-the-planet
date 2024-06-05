@@ -1,5 +1,3 @@
-# Educational Resources
-
 | **Resource** | **Summary** |
 |--------------|-------------|
 | [Web application hacker's handbook](https://amzn.to/4c2WAF6) | Generic hacking physical book. |
