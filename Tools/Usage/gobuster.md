@@ -35,20 +35,19 @@ Copy the below sh script for Linux or bat script for Windows
 
 input_file="input.txt"
 output_file="output.txt"
-wordlist="/path/to/wordlist.txt"  # Update this to the path of your wordlist
+wordlist="wordlist.txt"
 
 # Clear the output file if it already exists
-> "$output_file"
+echo > "$output_file"
 
-while IFS= read -r line; do
-  ip_port=(${line//:/ })
-  ip=${ip_port[0]}
-  port=${ip_port[1]}
+while IFS=":" read -r ip port; do
+    echo "Running Gobuster for $ip:$port..."
 
-  echo "Running Gobuster for $ip:$port..."
+    while read -r path; do
+        echo "Checking path $path"
+        gobuster dir -u "http://$ip:$port" -w "$path" -e -r -k -o "$output_file" >> /dev/null 2>&1
+    done < "$wordlist"
 
-  gobuster dir -u http://$ip:$port -w $wordlist >> "$output_file" 2>&1
-  echo -e "\n" >> "$output_file"  # Add a newline to separate results
 done < "$input_file"
 
 echo "Gobuster scan completed. Results saved in $output_file."
@@ -71,7 +70,7 @@ setlocal enabledelayedexpansion
 
 set "input_file=input.txt"
 set "output_file=output.txt"
-set "wordlist=C:\path\to\wordlist.txt"  :: Update this to the path of your wordlist
+set "wordlist=wordlist.txt"
 
 :: Clear the output file if it already exists
 echo. > "%output_file%"
@@ -82,8 +81,10 @@ for /f "tokens=1,2 delims=:" %%A in (%input_file%) do (
 
     echo Running Gobuster for !ip!:!port!...
 
-    gobuster dir -u http://!ip!:!port! -w %wordlist% >> "%output_file%" 2>&1
-    echo. >> "%output_file%"  :: Add a newline to separate results
+    for /f %%I in (%wordlist%) do (
+        echo Checking path %%I
+        gobuster dir -u http://!ip!:!port! -w "%%I" -e -r -k -o "%output_file%" >> nul 2>&1
+    )
 )
 
 echo Gobuster scan completed. Results saved in %output_file%.
