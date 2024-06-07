@@ -7,9 +7,9 @@
 | Exclude status codes from the output          | `gobuster dir -u https://example.com -w wordlist.txt -s 404,500` |
 | Use specific HTTP methods for requests        | `gobuster dir -u https://example.com -w wordlist.txt -x .php,.html -m GET,POST` |
 
-#### Using gobuster with nmap results
+## Using gobuster with nmap results
 
-##### Step 1
+### Step 1
 
 Extract the IP list from `full_scan_results.gnmap`: 
 
@@ -24,73 +24,47 @@ Reformat it into `input.txt`:
 192.168.0.1:443
 ```
 
-##### Step 2
+### Step 2
 
-Copy the below sh script for Linux or bat script for Windows
+Run the below python script
 
-
-**Linux**
 ```
-#!/bin/bash
+import subprocess
 
-input_file="input.txt"
-output_file="output.txt"
-wordlist="wordlist.txt"
+input_file = "input.txt"
+output_file = "output.txt"
+wordlist = "wordlist.txt"
 
 # Clear the output file if it already exists
-echo > "$output_file"
+with open(output_file, "w"):
+    pass
 
-while IFS=":" read -r ip port; do
-    echo "Running Gobuster for $ip:$port..."
+with open(input_file, "r") as f:
+    for line in f:
+        ip, port = line.strip().split(":")
+        print(f"Running Gobuster for {ip}:{port}...")
 
-    while read -r path; do
-        echo "Checking path $path"
-        gobuster dir -u "http://$ip:$port" -w "$path" -e -r -k -o "$output_file" >> /dev/null 2>&1
-    done < "$wordlist"
+        with open(wordlist, "r") as wordlist_file:
+            for word in wordlist_file:
+                word = word.strip()
+                
+                # Replace hyphens to prevent gobuster entering directory enumeration mode
+                if word == "-":
+                    modified_word = "/-"
+                else:
+                    modified_word = word
+                
+                # Print out the command issued to gobuster
+                # print(f"gobuster dir -u http://{ip}:{port}/ -w {modified_word} -e -r -k -o {output_file}")
+                
+                subprocess.run([
+                    "gobuster",
+                    "dir",
+                    "-u", f"http://{ip}:{port}/",
+                    "-w", modified_word,
+                    "-e", "-r", "-k",
+                    "-o", output_file
+                ])
 
-done < "$input_file"
-
-echo "Gobuster scan completed. Results saved in $output_file."
-```
-
-**Make the shell script executable** 
-```
-chmod +x run_gobuster.sh
-```
-
-**Run**
-```
-./run_gobuster.sh
-```
-
-**Windows**
-```
-@echo off
-setlocal enabledelayedexpansion
-
-set "input_file=input.txt"
-set "output_file=output.txt"
-set "wordlist=wordlist.txt"
-
-:: Clear the output file if it already exists
-echo. > "%output_file%"
-
-for /f "tokens=1,2 delims=:" %%A in (%input_file%) do (
-    set "ip=%%A"
-    set "port=%%B"
-
-    echo Running Gobuster for !ip!:!port!...
-
-    for /f %%I in (%wordlist%) do (
-        echo Checking path %%I
-        gobuster dir -u http://!ip!:!port! -w "%%I" -e -r -k -o "%output_file%" >> nul 2>&1
-    )
-)
-
-echo Gobuster scan completed. Results saved in %output_file%.
-```
-
-**Run**
-```
-run_gobuster.bat
+print("Gobuster scan completed. Results saved in", output_file)
 ```
