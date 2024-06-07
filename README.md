@@ -67,7 +67,7 @@ Check the [pentest wiki](https://github.com/nixawk/pentest-wiki/blob/master/3.Ex
 
 #### Testing known Vulnerabilities
 
-| Vulnerability Name/Link                                                                | Description                                                                                           |
+| Vulnerability                                                                | Description                                                                                           |
 |----------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
 | [Array Index Underflow (CWE-129)](https://cwe.mitre.org/data/definitions/129.html)     | Accessing array elements using an index that is less than zero.                                       |
 | [Classic Buffer Overflow (CWE-120)](https://cwe.mitre.org/data/definitions/120.html)   | Overwriting memory by writing more data than a buffer can hold.                                       |
