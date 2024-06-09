@@ -24,6 +24,8 @@ Reformat it into `input.txt`:
 192.168.0.1:443
 ```
 
+You can use my [nmap_results_plain_list.py](https://github.com/ashtonhogan/hack-the-planet/blob/main/Tools/nmap_results_plain_list.py) tool to automate this.
+
 ### Step 2
 
 Run the below python script
@@ -48,9 +50,11 @@ with open(input_file, "r") as f:
             for word in wordlist_file:
                 word = word.strip()
                 
-                # Replace hyphens to prevent gobuster entering directory enumeration mode
+                # Replace hyphens and "con" to prevent gobuster entering directory enumeration mode
                 if word == "-":
                     modified_word = "/-"
+                elif word == "con":
+                    modified_word = "/con"
                 else:
                     modified_word = word
                 

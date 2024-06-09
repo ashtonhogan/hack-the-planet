@@ -51,3 +51,5 @@
 | Rubber Ducky         | USB keystroke injection tool                       |
 | Samurai WTF          | Web testing framework                              |
 | Paros Proxy          | Web application vulnerability assessment           |
+| [sslscan](https://github.com/rbsec/sslscan)          | Tests SSL/TLS enabled services to discover supported cipher suites           |
+| [testssl.sh](https://github.com/drwetter/testssl.sh)          | Testing TLS/SSL encryption anywhere on any port           |

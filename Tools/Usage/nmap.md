@@ -6,3 +6,4 @@
 | Perform a stealth scan (SYN scan)              | `nmap -sS 192.168.1.1`                                             |
 | Detect OS and services                         | `nmap -A 192.168.1.1`                                              |
 | Save scan results in XML format                | `nmap -oX scan_results.xml 192.168.1.1`                            |
+| Service Enumeration and Version Detection                | `nmap -sV -p 80 192.168.1.1`                            |

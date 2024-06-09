@@ -13,6 +13,8 @@
 
 ### 1. Recon
 
+Check the [pentest wiki](https://github.com/nixawk/pentest-wiki/tree/master/1.Information-Gathering) for additional information gathering approaches.
+
 | Description                                                                                                                                                             | Link                                                                                   |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
 | Used to find autonomous system numbers which are used to group a company's public IP addresses                                                                         | [BGP Toolkit](https://bgp.he.net/)                                                     |
@@ -28,15 +30,18 @@
 | Scans cloud IP ranges and provides a report of addresses that responded with a certificate on port 443 (indicating it has a website)                                    | [Cloud IP Range Scanner](https://kaeferjaeger.gay/?dir=sni-ip-ranges)                  |
 | Git subdomains discovery                                                                                                                                               | Git Subdomains                                                  |
 | Git analysis                                                                                                                                                           | Git Analysis                                                    |
-| Sublist3r                                                                                                                                                           | [Use](https://github.com/ashtonhogan/hack-the-planet/blob/main/Tools/Usage/sublist3r.md) [Sublist3r](https://github.com/aboul3la/Sublist3r) to find endpoints indexed by search engines                                                    |
+| Sublist3r                                                                                                                                                           | [Use](https://github.com/ashtonhogan/hack-the-planet/blob/main/Tools/Usage/sublist3r.md) to find endpoints indexed by search engines                                                    |
 | Tools for scraping, such as Amass, Subfinder, BBOT                                                                                                                      | Amass, Subfinder, BBOT                                                         |
 | Service Enumeration and Version Detection                                                                                                                      | [Use](https://github.com/ashtonhogan/hack-the-planet/blob/main/Tools/Usage/nmap.md) nmap to detect service versions.                                                         |
-| Checking for Misconfigurations                                                                                                                      | Visit HTTP/HTTPS pages for default pages or error messages. [Use](https://github.com/ashtonhogan/hack-the-planet/blob/main/Tools/Usage/gobuster.md) tools like gobuster with pre-built [payloads](https://github.com/payloadbox/directory-payload-list/tree/master/Intruder) to find hidden directories and files.                                                         |
+| Certificate Scanning                                                                                                                      | [Use](https://github.com/ashtonhogan/hack-the-planet/blob/main/Tools/Usage/sslscan.md) sslscan to detect certificate issues.                                                        |
+| TLS Scanning                                                                                                                      | Use testssl.sh to detect TLS issues.                                                        |
+| Checking for Misconfigurations                                                                                                                      | Visit HTTP/HTTPS pages for default pages or error messages. [Use](https://github.com/ashtonhogan/hack-the-planet/blob/main/Tools/Usage/gobuster.md) tools like gobuster with pre-built [payloads](https://github.com/payloadbox/directory-payload-list/tree/master/Intruder) to find hidden directories and files and find common vulnerabilities such as default pages, directory listings, exposed configuration files and outdated software vulnerabilities.                                                         |
 | Linked Discovery integration with Burp Suite                                                                                                                           | Linked Discovery -> Burp                                                               |
 | Bruteforce subdomain discovery                                                                                                                                          | Bruteforce                                                                             |
 | Domain permutations for subdomain discovery                                                                                                                            | Permutations                                                                           |
 | HTTPX tool for probing URLs and taking screenshots                                                                                                                     | [HTTPX](https://github.com/projectdiscovery/httpx)                                      |
-| Common Vulnerabilities and Exposures (CVE) database                                                                                                                     | [CVE Database](https://www.cvedetails.com/cve/CVE-2009-5016/)                          |
+| Common Vulnerabilities and Exposures (CVE) database                                                                                                                     | [CVE Database](https://cve.mitre.org/)                          |
+| Common Weakness Enumeration (CWE) database                                                                                                                     | [CWE Database](https://cwe.mitre.org/)                          |
 | CVSS v3 Vulnerability Scoring Calculator                                                                                                                               | [CVE Calculator](https://nvd.nist.gov/vuln-metrics/cvss/v3-calculator)                 |
 
 ### 2. Hacking 🏴‍☠️
@@ -47,21 +52,14 @@ Check the [pentest wiki](https://github.com/nixawk/pentest-wiki/blob/master/3.Ex
 
 | Port Number | Actions and Common Vulnerabilities                                                                                                                                                                  |
 |-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 80, 443     | **SSL/TLS Configuration and Security**: Use `sslscan <target-ip>:443` or `testssl.sh` to check for weak ciphers, outdated protocols, and certificate issues.                                      |
-|             | - **Vulnerability Scanning**: Run tools like `Nikto`, `OpenVAS`, or `Nessus` to find known vulnerabilities.                                                                                         |
+| 80, 443     | - **Vulnerability Scanning**: Run tools like `Nikto`, `OpenVAS`, or `Nessus` to find known vulnerabilities.                                                                                         |
 |             | - **Web Application Testing**: Perform manual and automated tests using tools like `OWASP ZAP` and `Burp Suite` to check for vulnerabilities like SQL injection, XSS, CSRF, and file inclusion.      |
-|             | - **Exploitation (if permitted)**: Search for public exploits with `searchsploit nginx <version>`, and consider creating custom exploits if necessary.                                              |
+|             | - **Exploitation**: Search for public exploits with `searchsploit nginx <version>`, and consider creating custom exploits if necessary.                                              |
 |             | - **Privilege Escalation**: Look for server misconfigurations, files with incorrect permissions, and attempt to upload web shells if possible.                                                      |
 |             | - **Reporting**: Document findings, provide detailed reports, and give remediation recommendations.                                                                                                |
 |             | - **Common Vulnerabilities**: Default pages, directory listing, weak SSL/TLS configurations, SQL injection, XSS, CSRF, file inclusion, and outdated software vulnerabilities.                       |
-| 443         | - **SSL/TLS Configuration and Security**: Assess SSL/TLS strength using `sslscan <target-ip>:443` or `testssl.sh`.                                                                                  |
-|             | - **Checking for Misconfigurations**: Look for weak ciphers, outdated protocols, and certificate issues.                                                                                            |
-|             | - **Common Vulnerabilities**: Weak ciphers, outdated protocols, self-signed certificates, and SSL/TLS misconfigurations.                                                                            |
-| 80          | - **Service Enumeration and Version Detection**: Use `nmap -sV -p 80 <target-ip>` to detect service versions.                                                                                        |
-|             | - **Checking for Misconfigurations**: Visit HTTP pages for default pages or error messages. Use tools like `gobuster` to find hidden directories and files.                                          |
-|             | - **Common Vulnerabilities**: Default pages, directory listing, exposed configuration files, and outdated software vulnerabilities.                                                                 |
-| Any Port    | - **Service Enumeration and Version Detection**: Use `nmap -sV -p <port> <target-ip>` to identify services and versions.                                                                            |
-|             | - **Automated Vulnerability Scanning**: Use tools like `OpenVAS`, `Nessus`, or `Nikto` to scan for vulnerabilities.                                                                                 |
+| 443         | - **SSL/TLS Configuration and Security**: [Use](https://github.com/ashtonhogan/hack-the-planet/blob/main/Tools/Usage/sslscan.md) sslscan or `testssl.sh` to check for weak ciphers, outdated protocols, self-signed certificates, SL/TLS misconfigurations and certificate issues.                                                                                  |
+| 80          | - **Automated Vulnerability Scanning**: Use tools like `OpenVAS`, `Nessus`, or `Nikto` to scan for vulnerabilities.                                                                                 |
 |             | - **Manual Testing**: Manually test identified services for vulnerabilities specific to the detected service (e.g., FTP, SSH, SMTP).                                                                |
 |             | - **Privilege Escalation**: Look for misconfigurations, incorrect file permissions, and other weaknesses that could allow privilege escalation.                                                     |
 |             | - **Common Vulnerabilities**: Service-specific vulnerabilities (e.g., outdated software, misconfigurations, weak passwords, open directories), and privilege escalation opportunities.              |
@@ -175,3 +173,8 @@ Check the [pentest wiki](https://github.com/nixawk/pentest-wiki/blob/master/3.Ex
 | LLM08: Excessive Agency | Allowing LLMs too much control or decision-making power. |
 | LLM09: Overreliance | Relying too heavily on LLMs without adequate oversight. |
 | LLM10: Model Theft | Stealing or replicating LLM models without authorization. |
+
+#### Testing emails
+
+- Subscribe to newsletters, marketing emails, etc
+- Use my [Email Scan](Tools/email_scan.py) tool to check for incorrect links in emails that could be used for phishing
